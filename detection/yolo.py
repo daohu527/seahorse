@@ -14,10 +14,11 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+from detector import Detector
 
-class Detector:
+class YOLO(Detector):
   def __init__(self):
-    self._net = None
+    pass
 
   def detect(self, cv_img):
     pass

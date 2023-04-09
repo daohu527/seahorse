@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 #!/usr/bin/env python
 
 # Copyright 2023 daohu527 <daohu527@gmail.com>
@@ -16,7 +15,33 @@
 # limitations under the License.
 
 from tracklet import Tracklet
+from similarity.similarity import iou
+from data_associate.bipartite_graph_match import BipartiteGraphMatch
 
 class Tracker:
   def __init__(self) -> None:
-    self.tracklets = []
+    self.tracklets = dict()
+    self.associator = BipartiteGraphMatch()
+
+  def track(self, detections) -> list:
+    self.calc_similarity(self.tracklets, detections)
+    match_pairs, unmatch_tracklets, unmatch_detections = \
+        self.associator.associate(self.tracklets, detections)
+
+    self.del_tracklet(unmatch_tracklets)
+    self.add_tracklet(unmatch_detections)
+    for tracklet, detection in match_pairs:
+      tracklet.add(detection)
+
+  def add_tracklet(self, unmatch_detections):
+    for detection in unmatch_detections:
+      tracklet = Tracklet(detection)
+      self.tracklets.update((tracklet.id, tracklet))
+
+  def del_tracklet(self, unmatch_tracklets):
+    for tracklet in unmatch_tracklets:
+      if tracklet.is_lost():
+        self.tracklets.pop(tracklet.id)
+
+  def calc_similarity(self, src, dst):
+    iou(src, dst)

@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 #!/usr/bin/env python
 
 # Copyright 2023 daohu527 <daohu527@gmail.com>
@@ -17,7 +16,13 @@
 
 class Object:
   def __init__(self) -> None:
+    # detection
+    self.bbox = None
+    self.score = 0
     self.type = None
     self.position = None
     self.size = None
     self.heading = None
+
+    # track
+    self.track_id = None

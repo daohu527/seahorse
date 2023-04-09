@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 #!/usr/bin/env python
 
 # Copyright 2023 daohu527 <daohu527@gmail.com>
@@ -15,3 +14,11 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+from associator import Associator
+
+class BipartiteGraphMatch(Associator):
+  def __init__(self):
+    pass
+
+  def associate(self, src, dst) -> tuple(dict, list, list):
+    pass
