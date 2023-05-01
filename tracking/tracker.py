@@ -24,9 +24,10 @@ class Tracker:
     self.associator = BipartiteGraphMatch()
 
   def track(self, detections) -> list:
+    costs = distance(self.tracklets, detections)
     self.calc_similarity(self.tracklets, detections)
     match_pairs, unmatch_tracklets, unmatch_detections = \
-        self.associator.associate(self.tracklets, detections)
+        self.associator.associate(costs)
 
     self.del_tracklet(unmatch_tracklets)
     self.add_tracklet(unmatch_detections)
