@@ -14,5 +14,20 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-def read_image(file_path):
-    pass
+from source import Source
+
+
+class PILSource(Source):
+    """read PIL
+
+    Args:
+        Source (_type_): _description_
+    """
+    def __init__(self, url):
+        pass
+
+    def __iter__(self):
+        return self
+
+    def __next__(self):
+        pass

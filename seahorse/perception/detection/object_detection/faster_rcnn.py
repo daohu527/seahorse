@@ -14,7 +14,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from object_detection import ObjectDetection
+from detection import Detection
 
 import torch
 from torchvision.models.detection import (
@@ -23,7 +23,7 @@ from torchvision.models.detection import (
 )
 
 
-class FasterRCNN(ObjectDetection):
+class FasterRCNN(Detection):
     def __init__(self, weights=FasterRCNN_ResNet50_FPN_Weights.DEFAULT, box_score_thresh=0.9):
         self.model = fasterrcnn_resnet50_fpn(weights=weights, box_score_thresh=box_score_thresh)
         device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')

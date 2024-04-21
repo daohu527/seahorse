@@ -14,3 +14,14 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+import torch
+
+
+class Detection:
+    def __init__(self):
+        pass
+
+    def detect(self, img):
+        with torch.no_grad():
+            outputs = self.model(img)
+            return outputs

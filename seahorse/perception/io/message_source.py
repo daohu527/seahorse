@@ -14,27 +14,23 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+from source import Source
 
-from faster_rcnn import FasterRCNN
-from ssd import SSD
-from yolo import YOLO
-
-from ..io.source import Source
-
-from visualize import show
-
-__all__ = [
-    "FasterRCNN",
-    "SSD",
-    "YOLO",
-    "object_detection",
-]
+from pycyber import cyber
+from modules.drivers.proto.sensor_image_pb2 import Image
 
 
+def subscribe(topic, callback):
+    node = cyber.Node("__perception_node")
+    node.create_reader(topic, Image, callback)
+    node.spin()
 
-def object_detection(args):
-    model = getattr(__all__, args.model)()
-    source = Source(args.source)
-    for s in source:
-      predict = model.detect(s)
-      vis(s, predict)
+class MessageSource(Source):
+    def __init__(self):
+        pass
+
+    def __iter__(self):
+        pass
+
+    def __next__(self):
+        pass

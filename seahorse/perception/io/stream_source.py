@@ -14,11 +14,20 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from pycyber import cyber
-from modules.drivers.proto.sensor_image_pb2 import Image
+from source import Source
 
 
-def subscribe(topic, callback):
-    node = cyber.Node("__perception_node")
-    node.create_reader(topic, Image, callback)
-    node.spin()
+class StreamSource(Source):
+    """read video stream
+
+    Args:
+        Source (_type_): _description_
+    """
+    def __init__(self, url):
+        pass
+
+    def __iter__(self):
+        return self
+
+    def __next__(self):
+        pass

@@ -14,14 +14,22 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-import torch
+from abc import ABC, abstractmethod
 
 
-class ObjectDetection:
+class Source(ABC):
+    """Base class
+
+    Args:
+        ABC (_type_): _description_
+    """
     def __init__(self):
         pass
 
-    def detect(self, img):
-        with torch.no_grad():
-            outputs = self.model(img)
-            return outputs
+    @abstractmethod
+    def __iter__(self):
+        pass
+
+    @abstractmethod
+    def __next__(self):
+        pass

@@ -14,7 +14,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from object_detection import ObjectDetection
+from detection import Detection
 
 import torch
 from torchvision.models.detection import (
@@ -23,7 +23,7 @@ from torchvision.models.detection import (
 )
 
 
-class SSD(ObjectDetection):
+class SSD(Detection):
     def __init__(self, weights=SSD300_VGG16_Weights.DEFAULT):
         self.model = ssd300_vgg16(weights=weights)
         device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
