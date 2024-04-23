@@ -1,4 +1,6 @@
 # seahorse
+<img src=docs/seahorse.png width ="100">
+
 A pure python autonomous driving framework
 
 ## related works
