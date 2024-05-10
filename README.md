@@ -28,6 +28,11 @@ A pure python autonomous driving framework
 - [PythonRobotics](https://github.com/AtsushiSakai/PythonRobotics) Python codes for robotics algorithm
 - [Awesome Robotic Tooling](https://github.com/protontypes/awesome-robotic-tooling) A curated list of tooling for professional robotic development
 
+## Online Practice
+
+- [Traffic light detection](https://huggingface.co/spaces/daohu527/seahorse)
+- [Planning](https://mattbradley.github.io/dash/)
+
 ## Design
 
 You might be surprised that this autonomous driving system was developed in python. I know the speed is slow and can't guarantee real time, but its benefits are also obvious. It's easy to add features, verify algorithms, structure data, visualize and so on.
