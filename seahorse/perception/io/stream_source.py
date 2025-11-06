@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 
-# Copyright 2023 daohu527 <daohu527@gmail.com>
+# Copyright 2025 WheelOS. All Rights Reserved.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -14,6 +14,9 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+# Created Date: 2025-11-06
+# Author: daohu527
+
 from source import Source
 
 
@@ -23,6 +26,7 @@ class StreamSource(Source):
     Args:
         Source (_type_): _description_
     """
+
     def __init__(self, url):
         pass
 
@@ -31,3 +35,28 @@ class StreamSource(Source):
 
     def __next__(self):
         pass
+
+
+class VideoSource:
+    """Iterator for reading frames from a video file"""
+
+    def __init__(self, video_path: str):
+        self.cap = cv2.VideoCapture(video_path)
+        if not self.cap.isOpened():
+            raise IOError(f"Cannot open video file: {video_path}")
+        self.width = int(self.cap.get(cv2.CAP_PROP_FRAME_WIDTH))
+        self.height = int(self.cap.get(cv2.CAP_PROP_FRAME_HEIGHT))
+        self.fps = self.cap.get(cv2.CAP_PROP_FPS)
+
+    def __iter__(self) -> Iterator[np.ndarray]:
+        return self
+
+    def __next__(self) -> np.ndarray:
+        ret, frame = self.cap.read()
+        if not ret:
+            raise StopIteration
+        return frame
+
+    def release(self):
+        """Release video capture object"""
+        self.cap.release()

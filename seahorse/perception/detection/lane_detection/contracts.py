@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 
-# Copyright 2023 daohu527 <daohu527@gmail.com>
+# Copyright 2025 WheelOS. All Rights Reserved.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -14,17 +14,16 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from detection import Detection
-
-import torch
-from torchvision.models.detection import (
-    ssd300_vgg16,
-    SSD300_VGG16_Weights
-)
+# Created Date: 2025-11-06
+# Author: daohu527
 
 
-class SSD(Detection):
-    def __init__(self, weights=SSD300_VGG16_Weights.DEFAULT):
-        self.model = ssd300_vgg16(weights=weights)
-        device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
-        self.model.eval().to(device)
+from typing import List
+import numpy as np
+
+# A lane line is represented as a numpy array of [x, y] points.
+# Using np.ndarray is highly efficient for numerical operations.
+LaneLine = np.ndarray  # Shape will be (N, 2) where N is number of points
+
+# A list of all detected lane lines in a frame.
+LaneResults = List[LaneLine]

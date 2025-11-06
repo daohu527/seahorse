@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 
-# Copyright 2023 daohu527 <daohu527@gmail.com>
+# Copyright 2025 WheelOS. All Rights Reserved.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -14,14 +14,32 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-import torch
+# Created Date: 2025-11-06
+# Author: daohu527
 
 
-class Detection:
-    def __init__(self):
-        pass
+from dataclasses import dataclass
+from typing import List
 
-    def detect(self, img):
-        with torch.no_grad():
-            outputs = self.model(img)
-            return outputs
+
+@dataclass(frozen=True)
+class BoundingBox:
+    """Defines an immutable bounding box (x1, y1, x2, y2)."""
+
+    x1: int
+    y1: int
+    x2: int
+    y2: int
+
+
+@dataclass(frozen=True)
+class DetectionResult:
+    """Defines a standard, immutable detection result."""
+
+    bounding_box: BoundingBox
+    class_id: int
+    label: str
+    score: float
+
+
+DetectionResults = List[DetectionResult]

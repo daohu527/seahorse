@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 
-# Copyright 2023 daohu527 <daohu527@gmail.com>
+# Copyright 2025 WheelOS. All Rights Reserved.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -14,27 +14,44 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+# Created Date: 2025-11-06
+# Author: daohu527
+
+
+import cv2
 import numpy as np
-import matplotlib.pyplot as plt
+from .contracts import DetectionResults
 
-import torchvision.transforms.functional as F
-from torchvision.utils import draw_bounding_boxes
+COLOR_PALETTE = [
+    (255, 140, 0),
+    (220, 50, 220),
+    (0, 255, 0),
+    (0, 0, 255),
+    (255, 255, 0),
+    (0, 255, 255),
+    (255, 0, 255),
+]
 
-plt.rcParams["savefig.bbox"] = 'tight'
 
-
-def vis(outputs):
-    results = [draw_bounding_boxes(img, output['boxes'], width=4) for output in outputs]
-    show(results)
-
-
-def show(imgs):
-    if not isinstance(imgs, list):
-        imgs = [imgs]
-    fig, axs = plt.subplots(ncols=len(imgs), squeeze=False)
-    for i, img in enumerate(imgs):
-        img = img.detach()
-        img = F.to_pil_image(img)
-        axs[0, i].imshow(np.asarray(img))
-        axs[0, i].set(xticklabels=[], yticklabels=[], xticks=[], yticks=[])
-    plt.show()
+def draw_detections(image: np.ndarray, detections: DetectionResults) -> np.ndarray:
+    """Draws detection results onto an image."""
+    vis_image = image.copy()
+    for detection in detections:
+        box = detection.bounding_box
+        color = COLOR_PALETTE[detection.class_id % len(COLOR_PALETTE)]
+        cv2.rectangle(vis_image, (box.x1, box.y1), (box.x2, box.y2), color, 2)
+        label = f"{detection.label} {detection.score:.2f}"
+        (w, h), _ = cv2.getTextSize(label, cv2.FONT_HERSHEY_SIMPLEX, 0.6, 2)
+        cv2.rectangle(
+            vis_image, (box.x1, box.y1 - h - 5), (box.x1 + w, box.y1), color, cv2.FILLED
+        )
+        cv2.putText(
+            vis_image,
+            label,
+            (box.x1, box.y1 - 5),
+            cv2.FONT_HERSHEY_SIMPLEX,
+            0.6,
+            (0, 0, 0),
+            2,
+        )
+    return vis_image
