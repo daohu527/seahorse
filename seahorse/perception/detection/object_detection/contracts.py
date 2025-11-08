@@ -18,28 +18,25 @@
 # Author: daohu527
 
 
+from typing import List, Tuple
 from dataclasses import dataclass
-from typing import List
 
 
-@dataclass(frozen=True)
+@dataclass
 class BoundingBox:
-    """Defines an immutable bounding box (x1, y1, x2, y2)."""
-
     x1: int
     y1: int
     x2: int
     y2: int
 
 
-@dataclass(frozen=True)
+@dataclass
 class DetectionResult:
-    """Defines a standard, immutable detection result."""
-
     bounding_box: BoundingBox
     class_id: int
     label: str
     score: float
+    color: List[int]
 
 
 DetectionResults = List[DetectionResult]

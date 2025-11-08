@@ -22,7 +22,7 @@ import torch
 import numpy as np
 from ultralytics import YOLO
 
-from .detector import ObjectDetector
+from .base_detector import ObjectDetector
 from .contracts import BoundingBox, DetectionResult, DetectionResults
 
 
