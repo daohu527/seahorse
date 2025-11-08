@@ -18,11 +18,27 @@
 # Author: daohu527
 
 
+from dataclasses import dataclass
 from typing import List
-import numpy as np
 
-# A lane line is a numpy array of [x, y] points. Shape will be (N, 2).
-LaneLine = np.ndarray
 
-# A list of all detected lane lines in a frame.
-LaneResults = List[LaneLine]
+@dataclass
+class BoundingBox:
+    x_min: int
+    y_min: int
+    x_max: int
+    y_max: int
+
+
+@dataclass
+class DetectionResult:
+    def __init__(self, bounding_box, class_id, label, score, color, mask=None):
+        self.bounding_box = bounding_box
+        self.class_id = class_id
+        self.label = label
+        self.score = float(score)
+        self.color = color
+        self.mask = mask
+
+
+DetectionResults = List[DetectionResult]

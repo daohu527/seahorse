@@ -21,11 +21,9 @@
 from typing import Dict, Any
 import torch
 
-from .torchvision import TorchvisionDetector
-from .yolo import YOLODetector
-from .detector import ObjectDetector
+from .detector import Detector
+from .base_detector import ObjectDetector
 from .contracts import BoundingBox, DetectionResult, DetectionResults
-from .visualize import draw_detections
 
 
 def build_object_detector(config: Dict[str, Any]) -> ObjectDetector:
@@ -36,7 +34,7 @@ def build_object_detector(config: Dict[str, Any]) -> ObjectDetector:
     backend = config.get("backend")
     if not backend:
         raise ValueError(
-            "Detector config must specify a 'backend' ('torchvision' or 'yolo')."
+            "Detector config must specify a 'backend' ('vision' or 'yolo')."
         )
 
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
@@ -44,15 +42,13 @@ def build_object_detector(config: Dict[str, Any]) -> ObjectDetector:
         f"INFO: Building object detector with backend '{backend}' on device '{device}'..."
     )
 
-    if backend == "torchvision":
-        return TorchvisionDetector(
+    if backend == "vision":
+        return Detector(
             model_name=config["model_name"],
             weights_name=config["weights_name"],
             score_thresh=config.get("score_thresh", 0.7),
             device=device,
         )
-    elif backend == "yolo":
-        return YOLODetector(model_path=config["model_path"], device=device)
     else:
         raise ValueError(f"Unknown object detector backend: '{backend}'")
 
