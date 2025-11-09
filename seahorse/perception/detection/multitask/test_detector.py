@@ -31,7 +31,7 @@ def main():
     parser = argparse.ArgumentParser(
         description="YOLOE Segmentation Detection (Final Version)"
     )
-    parser.add_argument("--model", type=str, default="yoloe-11l-seg-pf.torchscript")
+    parser.add_argument("--model", type=str, default="yoloe-11s-seg-pf.torchscript")
     parser.add_argument("--image", type=str, required=True)
     parser.add_argument("--conf", type=float, default=0.25, help="Confidence threshold")
     args = parser.parse_args()
